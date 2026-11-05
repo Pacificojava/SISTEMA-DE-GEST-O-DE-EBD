@@ -23,10 +23,38 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="app-shell">
+    <div id="loginScreen" class="login-screen">
+      <div class="login-card">
+        <div class="login-brand" aria-label="Logo da igreja e branding do sistema">
+          <div class="report-logo-group report-logo-group--compact" data-logo-slot="church" aria-label="Logo da Igreja"></div>
+          <div>
+            <span class="brand-label">Solution Sunday School</span>
+            <strong>SSS</strong>
+          </div>
+        </div>
+
+        <form id="loginForm" class="login-form">
+          <div class="mb-3">
+            <label class="form-label" for="contextoIgreja">Chave da igreja</label>
+            <input id="contextoIgreja" type="text" class="form-control" value="JodnaMaia" placeholder="Ex.: JodnaMaia" required />
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="loginUsuario">Usuário</label>
+            <input id="loginUsuario" type="text" class="form-control" placeholder="nome" required />
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="loginSenha">Senha</label>
+            <input id="loginSenha" type="password" class="form-control" placeholder="Digite sua senha" required />
+          </div>
+          <button type="submit" class="btn btn-primary w-100 rounded-pill">Entrar</button>
+        </form>
+      </div>
+    </div>
+
+    <div id="appShellWrapper" class="app-shell hidden">
       <aside class="sidebar">
         <div class="brand-wrap">
-          <div class="brand-mark">E</div>
+          <div class="brand-logo-cluster brand-logo-cluster--sidebar" data-logo-slot="church" aria-label="Logo da Igreja"></div>
           <div>
             <span class="brand-label">EBD</span>
             <strong>Gestão</strong>
@@ -34,31 +62,35 @@
         </div>
 
         <nav class="sidebar-nav">
-          <a class="nav-item active" href="#">
+          <a class="nav-item active" href="#" data-section="dashboard">
             <span>📊</span>
             Dashboard
           </a>
-          <a class="nav-item" href="#">
+          <a class="nav-item" href="#" data-section="alunos">
             <span>👥</span>
             Alunos
           </a>
-          <a class="nav-item" href="#">
+          <a class="nav-item" href="#" data-section="professores">
             <span>🧑‍🏫</span>
             Professores
           </a>
-          <a class="nav-item" href="#">
+          <a class="nav-item" href="#" data-section="turmas">
             <span>📚</span>
             Turmas
           </a>
-          <a class="nav-item" href="#">
+          <a class="nav-item" href="#" data-section="frequencia">
             <span>✅</span>
             Frequência
           </a>
-          <a class="nav-item" href="#">
+          <a class="nav-item" href="#" data-section="agenda">
+            <span>📅</span>
+            Agenda
+          </a>
+          <a class="nav-item" href="#" data-section="relatorios">
             <span>📈</span>
             Relatórios
           </a>
-          <a class="nav-item" href="#">
+          <a class="nav-item" href="#" data-section="configuracoes">
             <span>⚙️</span>
             Configurações
           </a>
@@ -67,230 +99,836 @@
         <div class="user-card">
           <div class="user-avatar">HP</div>
           <div>
-            <strong>Helton Pacifico</strong>
-            <small>Coordenador</small>
+            <strong id="currentUserName">Usuário</strong>
+            <small id="currentUserRole">Acesso</small>
           </div>
+          <button type="button" class="btn btn-sm btn-outline-light ms-auto" id="btnLogoutSession">Sair</button>
         </div>
       </aside>
 
       <main class="content-area">
         <header class="topbar">
-          <div>
-            <span class="eyebrow-soft">Painel administrativo</span>
-            <h1>Dashboard da EBD</h1>
+          <div class="topbar-branding">
+            <div class="report-logo-group report-logo-group--compact" data-logo-slot="church" aria-label="Logo da Igreja"></div>
+            <div>
+              <span class="eyebrow-soft">Painel administrativo</span>
+              <h1 id="pageTitle">Dashboard da EBD</h1>
+            </div>
           </div>
 
           <div class="topbar-actions">
             <div class="search-box">
               <span>⌕</span>
-              <input type="text" value="Buscar..." aria-label="Buscar" />
+              <input type="text" placeholder="Buscar..." aria-label="Buscar" />
             </div>
             <button class="btn btn-primary btn-sm rounded-pill">+ Novo registro</button>
           </div>
         </header>
 
-        <section class="stats-grid">
-          <article class="stat-card primary">
-            <div class="stat-icon">👥</div>
-            <div>
-              <small>Total de alunos</small>
-              <strong>248</strong>
-              <span class="trend up">+12% este mês</span>
-            </div>
-          </article>
-
-          <article class="stat-card success">
-            <div class="stat-icon">✅</div>
-            <div>
-              <small>Frequência</small>
-              <strong>87%</strong>
-              <span class="trend up">+5,4% na semana</span>
-            </div>
-          </article>
-
-          <article class="stat-card warning">
-            <div class="stat-icon">📚</div>
-            <div>
-              <small>Turmas ativas</small>
-              <strong>18</strong>
-              <span class="trend neutral">3 em crescimento</span>
-            </div>
-          </article>
-
-          <article class="stat-card soft">
-            <div class="stat-icon">🧑‍🏫</div>
-            <div>
-              <small>Líderes ativos</small>
-              <strong>26</strong>
-              <span class="trend up">+2 novos</span>
-            </div>
-          </article>
-        </section>
-
-        <section class="dashboard-grid">
-          <div class="panel large-panel">
-            <div class="panel-header">
-              <div>
-                <span class="panel-label">Presença por turma</span>
-                <h2>Indicadores da semana</h2>
-              </div>
-              <button class="btn btn-light btn-sm rounded-pill">Ver detalhes</button>
-            </div>
-
-            <div class="bars-chart">
-              <div class="bar-group">
-                <span class="bar-label">Infantil</span>
-                <div class="bar-track"><span class="bar fill-1" style="height: 72%"></span></div>
-                <strong>72%</strong>
-              </div>
-              <div class="bar-group">
-                <span class="bar-label">Adolesc.</span>
-                <div class="bar-track"><span class="bar fill-2" style="height: 88%"></span></div>
-                <strong>88%</strong>
-              </div>
-              <div class="bar-group">
-                <span class="bar-label">Jovens</span>
-                <div class="bar-track"><span class="bar fill-3" style="height: 80%"></span></div>
-                <strong>80%</strong>
-              </div>
-              <div class="bar-group">
-                <span class="bar-label">Adultos</span>
-                <div class="bar-track"><span class="bar fill-4" style="height: 91%"></span></div>
-                <strong>91%</strong>
-              </div>
-              <div class="bar-group">
-                <span class="bar-label">Seniors</span>
-                <div class="bar-track"><span class="bar fill-5" style="height: 76%"></span></div>
-                <strong>76%</strong>
-              </div>
-            </div>
+        <section class="content-section active" data-section="dashboard">
+          <div class="report-header-logo-row" aria-label="Logotipos do relatório">
+            <div class="report-logo-group" data-logo-slot="church"></div>
+            <div class="report-logo-group" data-logo-slot="educacaoCrista"></div>
+            <div class="report-logo-group" data-logo-slot="ebd"></div>
           </div>
 
-          <div class="panel side-panel">
-            <div class="panel-header">
+          <section class="stats-grid">
+            <article class="stat-card primary">
+              <div class="stat-icon">👥</div>
               <div>
-                <span class="panel-label">Registro rápido</span>
-                <h2>Nova presença</h2>
+                <small>Total de alunos</small>
+                <strong id="totalAlunosStat">0</strong>
+                <span class="trend up">Atualizado em tempo real</span>
               </div>
-            </div>
+            </article>
 
-            <form class="mini-form">
-              <div class="mb-3">
-                <label class="form-label">Aluno</label>
-                <select class="form-select form-select-sm">
-                  <option>Selecione o aluno</option>
-                  <option>Maria Silva</option>
-                  <option>João Pereira</option>
-                  <option>Lucas Costa</option>
-                </select>
+            <article class="stat-card success">
+              <div class="stat-icon">✅</div>
+              <div>
+                <small>Frequência</small>
+                <strong id="taxaPresencaStat">0%</strong>
+                <span class="trend up">Taxa geral de presença</span>
               </div>
-              <div class="mb-3">
-                <label class="form-label">Turma</label>
-                <select class="form-select form-select-sm">
-                  <option>Escolha a turma</option>
-                  <option>Classe Infantil</option>
-                  <option>Adolescentes</option>
-                  <option>Jovens</option>
-                </select>
+            </article>
+
+            <article class="stat-card warning">
+              <div class="stat-icon">📚</div>
+              <div>
+                <small>Turmas ativas</small>
+                <strong id="totalClassesStat">0</strong>
+                <span class="trend neutral">Cadastradas no sistema</span>
               </div>
-              <div class="mb-3">
-                <label class="form-label">Status</label>
-                <div class="status-options">
-                  <button type="button" class="status-btn present active">Presente</button>
-                  <button type="button" class="status-btn absent">Faltou</button>
+            </article>
+
+            <article class="stat-card soft">
+              <div class="stat-icon">🧑‍🏫</div>
+              <div>
+                <small>Presenças</small>
+                <strong id="presencasStat">0 / 0</strong>
+                <span class="trend up">Registro semanal</span>
+              </div>
+            </article>
+          </section>
+
+          <section class="dashboard-grid">
+            <div class="panel large-panel">
+              <div class="panel-header">
+                <div>
+                  <span class="panel-label">Presença por turma</span>
+                  <h2>Indicadores da semana</h2>
+                </div>
+                <button class="btn btn-light btn-sm rounded-pill">Ver detalhes</button>
+              </div>
+
+              <div class="bars-chart">
+                <div class="bar-group">
+                  <span class="bar-label">Infantil</span>
+                  <div class="bar-track"><span class="bar fill-1" style="height: 72%"></span></div>
+                  <strong>72%</strong>
+                </div>
+                <div class="bar-group">
+                  <span class="bar-label">Adolesc.</span>
+                  <div class="bar-track"><span class="bar fill-2" style="height: 88%"></span></div>
+                  <strong>88%</strong>
+                </div>
+                <div class="bar-group">
+                  <span class="bar-label">Jovens</span>
+                  <div class="bar-track"><span class="bar fill-3" style="height: 80%"></span></div>
+                  <strong>80%</strong>
+                </div>
+                <div class="bar-group">
+                  <span class="bar-label">Adultos</span>
+                  <div class="bar-track"><span class="bar fill-4" style="height: 91%"></span></div>
+                  <strong>91%</strong>
+                </div>
+                <div class="bar-group">
+                  <span class="bar-label">Seniors</span>
+                  <div class="bar-track"><span class="bar fill-5" style="height: 76%"></span></div>
+                  <strong>76%</strong>
                 </div>
               </div>
-              <button type="submit" class="btn btn-primary w-100 rounded-pill mt-2">Salvar presença</button>
-            </form>
-          </div>
-        </section>
-
-        <section class="bottom-grid">
-          <div class="panel table-panel">
-            <div class="panel-header">
-              <div>
-                <span class="panel-label">Atividades recentes</span>
-                <h2>Lista de alunos</h2>
-              </div>
-              <button class="btn btn-light btn-sm rounded-pill">Exportar</button>
             </div>
 
+            <div class="panel side-panel">
+              <div class="panel-header">
+                <div>
+                  <span class="panel-label">Registro rápido</span>
+                  <h2>Nova presença</h2>
+                </div>
+              </div>
+
+              <form id="frequenciaForm" class="mini-form">
+                <div class="mb-3">
+                  <label class="form-label">Aluno</label>
+                  <select id="alunoSelect" class="form-select form-select-sm" required>
+                    <option value="">Selecione o aluno</option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Turma</label>
+                  <select id="classeSelect" class="form-select form-select-sm classeSelect" required>
+                    <option value="">Escolha a turma</option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Status</label>
+                  <div class="status-options">
+                    <button type="button" class="status-btn present active" data-presente="true" aria-pressed="true">Presente</button>
+                    <button type="button" class="status-btn absent" data-presente="false" aria-pressed="false">Faltou</button>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary w-100 rounded-pill mt-2">Salvar presença</button>
+              </form>
+            </div>
+          </section>
+
+          <section class="bottom-grid">
+            <div class="panel table-panel">
+              <div class="panel-header">
+                <div>
+                  <span class="panel-label">Atividades recentes</span>
+                  <h2>Lista de alunos</h2>
+                </div>
+                <button id="btnExportPdf" class="btn btn-light btn-sm rounded-pill" type="button">Exportar</button>
+              </div>
+
+              <div class="table-responsive">
+                <table class="table align-middle mb-0">
+                  <thead>
+                    <tr>
+                      <th>Aluno</th>
+                      <th>Turma</th>
+                      <th>Cargo</th>
+                      <th>Idade</th>
+                      <th>Situação</th>
+                      <th>Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody id="alunosTableBody">
+                    <tr>
+                      <td colspan="6">Carregando alunos...</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="panel feed-panel">
+              <div class="panel-header">
+                <div>
+                  <span class="panel-label">Agenda</span>
+                  <h2>Próximos eventos</h2>
+                </div>
+              </div>
+
+              <ul id="agendaList" class="event-list">
+                <li>
+                  <span class="event-date">--</span>
+                  <div>
+                    <strong>Carregando agenda...</strong>
+                    <small> Aguarde</small>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+
+        <section class="content-section" data-section="alunos">
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <span class="panel-label">Gestão</span>
+                <h2>Alunos</h2>
+              </div>
+              <button id="btnNovoAluno" class="btn btn-primary btn-sm rounded-pill" data-bs-toggle="modal" data-bs-target="#newAlunoModal">+ Novo aluno</button>
+            </div>
             <div class="table-responsive">
               <table class="table align-middle mb-0">
                 <thead>
                   <tr>
                     <th>Aluno</th>
                     <th>Turma</th>
-                    <th>Presença</th>
+                    <th>Cargo</th>
+                    <th>Idade</th>
                     <th>Situação</th>
+                    <th>Ações</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody id="alunosTableBodySection"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section class="content-section" data-section="professores">
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <span class="panel-label">Acesso</span>
+                <h2>Professores e Secretaria</h2>
+              </div>
+              <button id="btnNovoPerfil" class="btn btn-primary btn-sm rounded-pill" data-bs-toggle="modal" data-bs-target="#newUsuarioModal">+ Novo perfil</button>
+            </div>
+            <div class="table-responsive">
+              <table class="table align-middle mb-0">
+                <thead>
                   <tr>
-                    <td>Maria Silva</td>
-                    <td>Adolescentes</td>
-                    <td>18/20</td>
-                    <td><span class="badge badge-good">Regular</span></td>
+                    <th>Nome</th>
+                    <th>Login</th>
+                    <th>Perfil</th>
+                    <th>Status</th>
                   </tr>
+                </thead>
+                <tbody id="professoresTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section class="content-section" data-section="turmas">
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <span class="panel-label">Estrutura</span>
+                <h2>Turmas da EBD</h2>
+              </div>
+              <button id="btnNovaTurma" class="btn btn-primary btn-sm rounded-pill" data-bs-toggle="modal" data-bs-target="#newClasseModal">+ Nova turma</button>
+            </div>
+            <div class="table-responsive">
+              <table class="table align-middle mb-0">
+                <thead>
                   <tr>
-                    <td>João Pereira</td>
-                    <td>Jovens</td>
-                    <td>17/20</td>
-                    <td><span class="badge badge-good">Regular</span></td>
+                    <th>ID</th>
+                    <th>Nome da turma</th>
+                    <th>Status</th>
                   </tr>
+                </thead>
+                <tbody id="classesTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section class="content-section" data-section="frequencia">
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <span class="panel-label">Registro</span>
+                <h2>Presença</h2>
+              </div>
+            </div>
+            <form id="frequenciaFormSection" class="mini-form">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label">Aluno</label>
+                  <select id="alunoSelectSection" class="form-select form-select-sm" required>
+                    <option value="">Selecione o aluno</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Turma</label>
+                  <select id="classeSelectSection" class="form-select form-select-sm classeSelect" required>
+                    <option value="">Escolha a turma</option>
+                  </select>
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Status</label>
+                  <div class="status-options">
+                    <button type="button" class="status-btn present active" data-presente="true" aria-pressed="true">Presente</button>
+                    <button type="button" class="status-btn absent" data-presente="false" aria-pressed="false">Faltou</button>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <button type="submit" class="btn btn-primary rounded-pill">Salvar presença</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <section class="content-section" data-section="agenda">
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <span class="panel-label">Calendário</span>
+                <h2>Agenda da EBD</h2>
+              </div>
+              <button id="btnNovaAgenda" class="btn btn-primary btn-sm rounded-pill" data-bs-toggle="modal" data-bs-target="#newAgendaModal">+ Nova agenda</button>
+            </div>
+            <div class="table-responsive">
+              <table class="table align-middle mb-0">
+                <thead>
                   <tr>
-                    <td>Lucas Costa</td>
-                    <td>Classe Infantil</td>
-                    <td>12/15</td>
-                    <td><span class="badge badge-alert">Atenção</span></td>
+                    <th>Título</th>
+                    <th>Descrição</th>
+                    <th>Data</th>
+                    <th>Horário</th>
+                    <th>Local</th>
+                    <th>Ações</th>
                   </tr>
+                </thead>
+                <tbody id="agendaTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section class="content-section" data-section="relatorios">
+          <div class="panel mb-4">
+            <div class="panel-header">
+              <div>
+                <span class="panel-label">Visão geral</span>
+                <h2>Relatórios e indicadores</h2>
+              </div>
+              <button id="btnExportPdfRelatorio" class="btn btn-primary btn-sm rounded-pill" type="button">Exportar PDF</button>
+            </div>
+            <div class="report-header-logo-row report-header-logo-row--panel" aria-label="Logotipos do relatório">
+              <div class="report-logo-group" data-logo-slot="church"></div>
+              <div class="report-logo-group" data-logo-slot="educacaoCrista"></div>
+              <div class="report-logo-group" data-logo-slot="ebd"></div>
+            </div>
+            <div class="stats-grid compact-grid">
+              <article class="stat-card success">
+                <div class="stat-icon">📈</div>
+                <div>
+                  <small>Taxa de presença</small>
+                  <strong id="reportTaxa">0%</strong>
+                </div>
+              </article>
+              <article class="stat-card primary">
+                <div class="stat-icon">👥</div>
+                <div>
+                  <small>Alunos ativos</small>
+                  <strong id="reportAlunos">0</strong>
+                </div>
+              </article>
+              <article class="stat-card warning">
+                <div class="stat-icon">📚</div>
+                <div>
+                  <small>Turmas</small>
+                  <strong id="reportTurmas">0</strong>
+                </div>
+              </article>
+            </div>
+
+            <div class="row g-3 align-items-end mt-3">
+              <div class="col-md-4">
+                <label class="form-label" for="trimestreRelatorioSelect">Período do relatório</label>
+                <select id="trimestreRelatorioSelect" class="form-select">
+                  <option value="1">1º Trimestre (Jan / Fev / Mar)</option>
+                  <option value="2">2º Trimestre (Abr / Mai / Jun)</option>
+                  <option value="3">3º Trimestre (Jul / Ago / Set)</option>
+                  <option value="4">4º Trimestre (Out / Nov / Dez)</option>
+                </select>
+              </div>
+            </div>
+            <div id="trimestreRelatorioResumo" class="mt-3"></div>
+          </div>
+
+          <div class="panel mb-4">
+            <div class="panel-header">
+              <div>
+                <span class="panel-label">Relatório 1</span>
+                <h2>Individual por aluno</h2>
+              </div>
+            </div>
+            <div class="row g-3 align-items-end mb-3">
+              <div class="col-md-5">
+                <label class="form-label" for="alunoRelatorioSelect">Selecione o aluno</label>
+                <select id="alunoRelatorioSelect" class="form-select">
+                  <option value="">Selecione o aluno</option>
+                </select>
+              </div>
+              <div class="col-md-5">
+                <label class="form-label" for="relatorioAlunoNome">Buscar por nome</label>
+                <input id="relatorioAlunoNome" type="text" class="form-control" placeholder="Ex.: Geordana Maia Gatin" />
+              </div>
+              <div class="col-md-2 d-grid">
+                <button id="btnBuscarRelatorioAluno" type="button" class="btn btn-primary">Buscar</button>
+              </div>
+            </div>
+            <div id="relatorioAlunoSummary" class="mb-3"></div>
+            <div class="table-responsive">
+              <table class="table table-striped table-hover align-middle mb-0">
+                <thead>
                   <tr>
-                    <td>Ana Souza</td>
-                    <td>Adultos</td>
-                    <td>19/20</td>
-                    <td><span class="badge badge-good">Regular</span></td>
+                    <th>Nome do Aluno</th>
+                    <th>Turma/Classe</th>
+                    <th>Total de Aulas</th>
+                    <th>Presenças</th>
+                    <th>Faltas</th>
+                    <th>Taxa de Frequência</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="relatorioAlunoTableBody">
+                  <tr>
+                    <td colspan="7" class="text-center text-muted">Nenhum dado carregado.</td>
                   </tr>
                 </tbody>
               </table>
             </div>
           </div>
 
-          <div class="panel feed-panel">
+          <div class="panel mb-4">
             <div class="panel-header">
               <div>
-                <span class="panel-label">Agenda</span>
-                <h2>Próximos eventos</h2>
+                <span class="panel-label">Relatório 2</span>
+                <h2>Geral por turma</h2>
+              </div>
+            </div>
+            <div class="row g-3 mb-3">
+              <div class="col-md-6">
+                <label class="form-label" for="classeRelatorioSelect">Selecione a turma</label>
+                <select id="classeRelatorioSelect" class="form-select">
+                  <option value="">Selecione a turma</option>
+                </select>
+              </div>
+            </div>
+            <div id="relatorioClasseResumo" class="mb-3"></div>
+            <h3 id="relatorioClasseTitle" class="h5 mb-3">Selecione uma turma</h3>
+            <div class="table-responsive">
+              <table class="table table-striped table-hover align-middle mb-0">
+                <thead>
+                  <tr>
+                    <th>Aluno</th>
+                    <th>Presenças</th>
+                    <th>Faltas</th>
+                    <th>Taxa de Frequência</th>
+                    <th>Situação</th>
+                  </tr>
+                </thead>
+                <tbody id="relatorioClasseTableBody">
+                  <tr>
+                    <td colspan="5" class="text-center text-muted">Selecione uma turma para visualizar os dados.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <span class="panel-label">Relatório 3</span>
+                <h2>Consolidado geral da EBD</h2>
+              </div>
+            </div>
+            <div id="relatorioGeralResumo" class="mb-4"></div>
+            <div class="mb-4">
+              <h3 class="h5 mb-3">Tabela consolidada por turmas</h3>
+              <div class="table-responsive">
+                <table class="table table-striped table-hover align-middle mb-0">
+                  <thead>
+                    <tr>
+                      <th>Classe / Turma</th>
+                      <th>Alunos Matriculados</th>
+                      <th>Total de Presenças</th>
+                      <th>Média de Presença</th>
+                    </tr>
+                  </thead>
+                  <tbody id="relatorioGeralTurmasTableBody">
+                    <tr>
+                      <td colspan="4" class="text-center text-muted">Carregando dados gerais...</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div>
+              <h3 class="h5 mb-3">Tabela geral de todos os alunos</h3>
+              <div class="table-responsive">
+                <table class="table table-striped table-hover align-middle mb-0">
+                  <thead>
+                    <tr>
+                      <th>Aluno</th>
+                      <th>Turma</th>
+                      <th>Presenças</th>
+                      <th>Faltas</th>
+                      <th>Taxa de Assiduidade</th>
+                      <th>Situação</th>
+                    </tr>
+                  </thead>
+                  <tbody id="relatorioGeralAlunosTableBody">
+                    <tr>
+                      <td colspan="6" class="text-center text-muted">Carregando dados gerais...</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="content-section" data-section="configuracoes">
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <span class="panel-label">Sistema</span>
+                <h2>Configurações</h2>
+              </div>
+            </div>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="config-card">
+                  <h3>Perfil do usuário</h3>
+                  <p>Gerencie as regras de acesso e permissões da secretaria e auxiliares.</p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="config-card">
+                  <h3>Sincronização</h3>
+                  <p>Configure backups locais e sincronização de dados para a unidade da EBD.</p>
+                </div>
               </div>
             </div>
 
-            <ul class="event-list">
-              <li>
-                <span class="event-date">12</span>
+            <div class="mt-4 panel sub-panel">
+              <div class="panel-header">
                 <div>
-                  <strong>Reunião de líderes</strong>
-                  <small>08:30 • Sala 2</small>
+                  <span class="panel-label">Gestão</span>
+                  <h2>Cargos da igreja</h2>
                 </div>
-              </li>
-              <li>
-                <span class="event-date alt">14</span>
-                <div>
-                  <strong>Aula de Jovens</strong>
-                  <small>19:00 • Auditório</small>
+              </div>
+
+              <form id="cargoForm" class="row g-3 align-items-end mt-1">
+                <input type="hidden" id="cargoId" value="" />
+                <div class="col-md-8">
+                  <label for="cargoNome" class="form-label">Nome do cargo</label>
+                  <input id="cargoNome" type="text" class="form-control" placeholder="Ex.: Pastor" required />
                 </div>
-              </li>
-              <li>
-                <span class="event-date">18</span>
-                <div>
-                  <strong>Visita pastoral</strong>
-                  <small>09:00 • Igreja</small>
+                <div class="col-md-4 d-grid">
+                  <button type="submit" class="btn btn-primary">Salvar cargo</button>
                 </div>
-              </li>
-            </ul>
+              </form>
+
+              <div class="table-responsive mt-4">
+                <table class="table table-striped table-hover align-middle mb-0">
+                  <thead>
+                    <tr>
+                      <th>Nome</th>
+                      <th>Status</th>
+                      <th class="text-end">Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody id="cargosTableBody">
+                    <tr>
+                      <td colspan="3" class="text-center text-muted">Carregando cargos...</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </section>
       </main>
     </div>
 
+    <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+    <div class="modal fade" id="newAlunoModal" tabindex="-1" aria-labelledby="newAlunoModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <form id="newAlunoForm">
+            <div class="modal-header">
+              <h5 class="modal-title" id="newAlunoModalLabel">Novo aluno</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="newAlunoNome" class="form-label">Nome do aluno</label>
+                <input id="newAlunoNome" type="text" class="form-control" required />
+              </div>
+              <div class="mb-3">
+                <label for="newAlunoIdade" class="form-label">Idade</label>
+                <input id="newAlunoIdade" type="number" min="0" class="form-control" required />
+              </div>
+              <div class="mb-3">
+                <label for="newAlunoTurma" class="form-label">Turma</label>
+                <select id="newAlunoTurma" class="form-select classeSelect" required>
+                  <option value="">Escolha a turma</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="newAlunoCargo" class="form-label">Cargo</label>
+                <select id="newAlunoCargo" class="form-select" required>
+                  <option value="">Selecione o cargo</option>
+                  <option value="Pastor">Pastor</option>
+                  <option value="Professor(a)">Professor(a)</option>
+                  <option value="Porteiro">Porteiro</option>
+                  <option value="Auxiliar Financeiro(a)">Auxiliar Financeiro(a)</option>
+                  <option value="Auxiliar da Sec. de Educação Cristã">Auxiliar da Sec. de Educação Cristã</option>
+                  <option value="Secretário(a) Geral">Secretário(a) Geral</option>
+                  <option value="Tesoureiro(a)">Tesoureiro(a)</option>
+                  <option value="Mídia">Mídia</option>
+                  <option value="Membro">Membro</option>
+                </select>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Salvar aluno</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="newClasseModal" tabindex="-1" aria-labelledby="newClasseModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <form id="newClasseForm">
+            <div class="modal-header">
+              <h5 class="modal-title" id="newClasseModalLabel">Nova turma</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="newClasseNome" class="form-label">Nome da turma</label>
+                <input id="newClasseNome" type="text" class="form-control" placeholder="Ex.: Adultos" required />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Salvar turma</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="newUsuarioModal" tabindex="-1" aria-labelledby="newUsuarioModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <form id="newUsuarioForm">
+            <div class="modal-header">
+              <h5 class="modal-title" id="newUsuarioModalLabel">Novo perfil</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="newUsuarioNome" class="form-label">Nome completo</label>
+                <input id="newUsuarioNome" type="text" class="form-control" required />
+              </div>
+              <div class="mb-3">
+                <label for="newUsuarioLogin" class="form-label">Login</label>
+                <input id="newUsuarioLogin" type="text" class="form-control" required />
+              </div>
+              <div class="mb-3">
+                <label for="newUsuarioSenha" class="form-label">Senha</label>
+                <input id="newUsuarioSenha" type="password" class="form-control" required />
+              </div>
+              <div class="mb-3">
+                <label for="newUsuarioPerfil" class="form-label">Perfil</label>
+                <select id="newUsuarioPerfil" class="form-select" required>
+                  <option value="">Selecione o perfil</option>
+                  <option value="secretaria_geral">Secretária Geral</option>
+                  <option value="auxiliar_secretaria">Auxiliar da Secretaria</option>
+                </select>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Salvar perfil</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="newAgendaModal" tabindex="-1" aria-labelledby="newAgendaModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <form id="newAgendaForm">
+            <div class="modal-header">
+              <h5 class="modal-title" id="newAgendaModalLabel">Nova agenda</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="newAgendaTitulo" class="form-label">Título</label>
+                <input id="newAgendaTitulo" type="text" class="form-control" required />
+              </div>
+              <div class="mb-3">
+                <label for="newAgendaDescricao" class="form-label">Descrição</label>
+                <textarea id="newAgendaDescricao" class="form-control" rows="3"></textarea>
+              </div>
+              <div class="row g-2">
+                <div class="col-md-6">
+                  <label for="newAgendaData" class="form-label">Data</label>
+                  <input id="newAgendaData" type="date" class="form-control" required />
+                </div>
+                <div class="col-md-6">
+                  <label for="newAgendaHorario" class="form-label">Horário</label>
+                  <input id="newAgendaHorario" type="time" class="form-control" />
+                </div>
+              </div>
+              <div class="mb-3 mt-3">
+                <label for="newAgendaLocal" class="form-label">Local</label>
+                <input id="newAgendaLocal" type="text" class="form-control" placeholder="Ex.: Sala 2" />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Salvar agenda</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="editAgendaModal" tabindex="-1" aria-labelledby="editAgendaModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <form id="editAgendaForm">
+            <div class="modal-header">
+              <h5 class="modal-title" id="editAgendaModalLabel">Editar agenda</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="editAgendaTitulo" class="form-label">Título</label>
+                <input id="editAgendaTitulo" type="text" class="form-control" required />
+              </div>
+              <div class="mb-3">
+                <label for="editAgendaDescricao" class="form-label">Descrição</label>
+                <textarea id="editAgendaDescricao" class="form-control" rows="3"></textarea>
+              </div>
+              <div class="row g-2">
+                <div class="col-md-6">
+                  <label for="editAgendaData" class="form-label">Data</label>
+                  <input id="editAgendaData" type="date" class="form-control" required />
+                </div>
+                <div class="col-md-6">
+                  <label for="editAgendaHorario" class="form-label">Horário</label>
+                  <input id="editAgendaHorario" type="time" class="form-control" />
+                </div>
+              </div>
+              <div class="mb-3 mt-3">
+                <label for="editAgendaLocal" class="form-label">Local</label>
+                <input id="editAgendaLocal" type="text" class="form-control" />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Salvar alterações</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="editAlunoModal" tabindex="-1" aria-labelledby="editAlunoModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <form id="editAlunoForm">
+            <div class="modal-header">
+              <h5 class="modal-title" id="editAlunoModalLabel">Editar aluno</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="editAlunoNome" class="form-label">Nome do aluno</label>
+                <input id="editAlunoNome" type="text" class="form-control" required />
+              </div>
+              <div class="mb-3">
+                <label for="editAlunoIdade" class="form-label">Idade</label>
+                <input id="editAlunoIdade" type="number" min="0" class="form-control" required />
+              </div>
+              <div class="mb-3">
+                <label for="editAlunoTurma" class="form-label">Turma</label>
+                <select id="editAlunoTurma" class="form-select classeSelect" required>
+                  <option value="">Escolha a turma</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="editAlunoCargo" class="form-label">Cargo</label>
+                <select id="editAlunoCargo" class="form-select" required>
+                  <option value="">Selecione o cargo</option>
+                  <option value="Pastor">Pastor</option>
+                  <option value="Professor(a)">Professor(a)</option>
+                  <option value="Porteiro">Porteiro</option>
+                  <option value="Auxiliar Financeiro(a)">Auxiliar Financeiro(a)</option>
+                  <option value="Auxiliar da Sec. de Educação Cristã">Auxiliar da Sec. de Educação Cristã</option>
+                  <option value="Secretário(a) Geral">Secretário(a) Geral</option>
+                  <option value="Tesoureiro(a)">Tesoureiro(a)</option>
+                  <option value="Mídia">Mídia</option>
+                  <option value="Membro">Membro</option>
+                </select>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Salvar alterações</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script type="module" src="/public/js/app.js"></script>
   </body>
 </html>

@@ -24,11 +24,56 @@ html, body {
   min-height: 100%;
 }
 
+.hidden {
+  display: none !important;
+}
+
 body {
   font-family: 'Inter', sans-serif;
   background: var(--bg);
   color: var(--text);
   line-height: 1.6;
+}
+
+.login-screen {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(180deg, #0c1e21 0%, #18363d 100%);
+  padding: 1.5rem;
+}
+
+.login-card {
+  width: min(100%, 420px);
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 22px;
+  padding: 2rem 1.5rem;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.22);
+}
+
+.login-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.login-brand strong {
+  display: block;
+  font-size: 1.7rem;
+  color: var(--text);
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.login-form .btn {
+  margin-top: 0.6rem;
 }
 
 button, input, select {
@@ -58,6 +103,22 @@ button, input, select {
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+.brand-logo-cluster {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 64px;
+}
+
+.brand-logo-cluster--sidebar {
+  width: 60px;
+  height: 60px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 0.25rem;
+}
+
 .brand-mark {
   width: 42px;
   height: 42px;
@@ -69,6 +130,88 @@ button, input, select {
   justify-content: center;
   font-weight: 800;
   font-size: 1.2rem;
+}
+
+.logo-tile,
+.logo-tile img,
+.report-logo-group img,
+.brand-logo-cluster img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.logo-tile {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  overflow: hidden;
+  background: transparent;
+}
+
+.logo-tile img,
+.report-logo-group img,
+.brand-logo-cluster img {
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.topbar-branding {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.report-logo-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 68px;
+  min-height: 68px;
+  padding: 0.35rem;
+  border-radius: 14px;
+  background: rgba(15, 141, 141, 0.05);
+  border: 1px solid rgba(15, 141, 141, 0.08);
+}
+
+.report-logo-group img {
+  max-height: 68px;
+  width: auto;
+}
+
+.report-logo-group--compact {
+  min-width: 54px;
+  min-height: 54px;
+}
+
+.report-logo-group--compact img {
+  max-height: 54px;
+}
+
+.report-header-logo-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 0 1.2rem;
+  flex-wrap: wrap;
+}
+
+.report-header-logo-row--panel {
+  justify-content: flex-start;
+  padding-top: 0.25rem;
+}
+
+.report-logo-group[data-logo-slot='church'] img,
+.brand-logo-cluster[data-logo-slot='church'] img {
+  max-height: 72px;
+}
+
+.report-logo-group[data-logo-slot='educacaoCrista'] img,
+.report-logo-group[data-logo-slot='ebd'] img {
+  max-height: 62px;
 }
 
 .brand-label {
@@ -498,6 +641,71 @@ button, input, select {
 
 .event-list small {
   color: var(--muted);
+}
+
+.content-section {
+  display: none;
+}
+
+.content-section.active {
+  display: block;
+}
+
+.compact-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.config-card {
+  background: var(--panel-alt);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 1.2rem;
+  height: 100%;
+}
+
+.config-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.config-card p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.toast-container {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  z-index: 9999;
+}
+
+.toast-message {
+  min-width: 220px;
+  max-width: 320px;
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
+  font-weight: 600;
+  color: #fff;
+  box-shadow: var(--shadow);
+}
+
+.toast-message.success {
+  background: linear-gradient(135deg, var(--success), #1f8b69);
+}
+
+.toast-message.error {
+  background: linear-gradient(135deg, #d9534f, #b93835);
+}
+
+.btn-delete-aluno {
+  border-radius: 999px;
+  font-size: 0.75rem;
+  padding: 0.42rem 0.8rem;
+  font-weight: 700;
 }
 
 @media (max-width: 1100px) {
