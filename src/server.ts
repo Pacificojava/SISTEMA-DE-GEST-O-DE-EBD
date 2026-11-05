@@ -20,7 +20,7 @@ declare global {
 }
 
 const app = express();
-const PORT = 3000;
+const PORT = Number(process.env.PORT) || 3000;
 const JWT_SECRET = process.env.JWT_SECRET ?? 'sss-dev-secret-key-change-me';
 const ALUNO_CARGOS = [
   'Pastor',
@@ -1097,8 +1097,8 @@ app.use((error: Error & { status?: number; type?: string }, _req: Request, res: 
 export function startServer(): void {
   initializeDatabase()
     .then(() => {
-      app.listen(PORT, () => {
-        console.log(`Servidor SSS rodando em http://localhost:${PORT}`);
+      app.listen(PORT, '0.0.0.0', () => {
+        console.log(`Servidor SSS rodando na porta ${PORT}`);
       });
     })
     .catch((error) => {
