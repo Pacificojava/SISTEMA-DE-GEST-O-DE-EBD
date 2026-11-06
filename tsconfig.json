@@ -5,7 +5,6 @@
     "moduleResolution": "node",
     "lib": ["es2022"],
     "types": ["node"],
-    "rootDir": "./src",
     "outDir": "./dist",
     "esModuleInterop": true,
     "strict": true,
@@ -13,5 +12,5 @@
     "forceConsistentCasingInFileNames": true,
     "verbatimModuleSyntax": false
   },
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts", "api/**/*.ts"]
 }
