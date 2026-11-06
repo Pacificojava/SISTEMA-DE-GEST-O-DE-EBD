@@ -1,21 +1,27 @@
 {
   "name": "sistema-gestao-ebd",
   "version": "1.0.0",
-  "description": "",
-  "main": "dist/index.js",
+  "description": "Solution Sunday School (SSS) backend and web app",
+  "main": "dist/src/index.js",
   "scripts": {
     "dev": "ts-node src/index.ts",
-    "build": "tsc",
-    "start": "node dist/index.js",
+    "build": "node -e \"require('fs').rmSync('dist', { recursive: true, force: true });\" && tsc",
+    "start": "node dist/src/index.js",
     "test": "echo \"No tests configured\" && exit 0"
   },
-  "keywords": [],
+  "keywords": [
+    "sss",
+    "ebd",
+    "express",
+    "postgres",
+    "vercel"
+  ],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
     "@types/node": "^26.6.6",
-    "@types/sqlite3": "^3.1.11",
+    "@types/pg": "^8.16.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
   },
@@ -23,8 +29,9 @@
     "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.10",
     "bcryptjs": "^3.0.3",
+    "dotenv": "^17.0.1",
     "express": "^5.3.0",
     "jsonwebtoken": "^9.0.3",
-    "sqlite3": "^6.0.1"
+    "pg": "^8.16.0"
   }
 }

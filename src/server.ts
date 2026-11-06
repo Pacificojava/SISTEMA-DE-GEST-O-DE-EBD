@@ -1,4 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express';
+import fs from 'fs';
 import path from 'path';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
@@ -32,6 +33,11 @@ const ALUNO_CARGOS = [
   'Tesoureiro(a)',
   'Mídia',
   'Membro',
+  'Visitante',
+  'Cordenador(a) de jovens',
+  'Cordenador(a) de crianças',
+  'Cordenador(a) de adolescentes',
+  'Cordenador(a) de EBD',
 ];
 
 function requireAuth(req: Request, res: Response, next: NextFunction): void {
@@ -91,8 +97,13 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(express.static(path.resolve(__dirname, '..')));
-app.use('/public', express.static(path.resolve(__dirname, '../public')));
+const projectRootCandidate = path.resolve(__dirname, '..');
+const projectRoot = fs.existsSync(path.resolve(projectRootCandidate, 'index.html'))
+  ? projectRootCandidate
+  : path.resolve(projectRootCandidate, '..');
+
+app.use(express.static(projectRoot));
+app.use('/public', express.static(path.resolve(projectRoot, 'public')));
 
 app.post('/api/auth/validar-contexto', async (req: Request, res: Response) => {
   try {
@@ -1023,7 +1034,7 @@ app.get('/api/relatorios/trimestre/:trimestre', async (req: Request, res: Respon
        FROM classes c
        LEFT JOIN alunos a ON a.classe_id = c.id
        LEFT JOIN frequencias f ON f.aluno_id = a.id AND f.classe_id = c.id
-       AND CAST(strftime('%m', f.data_aula) AS INTEGER) BETWEEN ? AND ?
+       AND EXTRACT(MONTH FROM f.data_aula)::int BETWEEN ? AND ?
        GROUP BY c.id, c.nome_classe
        ORDER BY c.nome_classe ASC`,
       [mesInicio, mesFim],
@@ -1053,7 +1064,7 @@ app.get('/api/relatorios/trimestre/:trimestre', async (req: Request, res: Respon
        FROM alunos a
        INNER JOIN classes c ON c.id = a.classe_id
        LEFT JOIN frequencias f ON f.aluno_id = a.id
-       AND CAST(strftime('%m', f.data_aula) AS INTEGER) BETWEEN ? AND ?
+       AND EXTRACT(MONTH FROM f.data_aula)::int BETWEEN ? AND ?
        GROUP BY a.id, a.nome, c.nome_classe
        ORDER BY a.nome ASC`,
       [mesInicio, mesFim],
