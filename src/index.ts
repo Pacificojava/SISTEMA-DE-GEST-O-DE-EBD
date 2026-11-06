@@ -1,3 +1,7 @@
-import { startServer } from './server';
+import app, { startServer } from './server';
 
-startServer();
+if (require.main === module) {
+  startServer();
+}
+
+export default app;

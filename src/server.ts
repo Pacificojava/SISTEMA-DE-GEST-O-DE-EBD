@@ -1114,6 +1114,15 @@ app.use((error: Error & { status?: number; type?: string }, _req: Request, res: 
 });
 
 export function startServer(): void {
+  const shouldListen = process.env.VERCEL !== '1' && process.env.NODE_ENV !== 'production';
+
+  if (!shouldListen) {
+    initializeDatabase().catch((error) => {
+      console.error('Não foi possível inicializar o banco no ambiente serverless:', error);
+    });
+    return;
+  }
+
   initializeDatabase()
     .then(() => {
       app.listen(PORT, '0.0.0.0', () => {
@@ -1127,3 +1136,4 @@ export function startServer(): void {
 }
 
 export default app;
+module.exports = app;
