@@ -105,6 +105,14 @@ const projectRoot = fs.existsSync(path.resolve(projectRootCandidate, 'index.html
 app.use(express.static(projectRoot));
 app.use('/public', express.static(path.resolve(projectRoot, 'public')));
 
+app.get('/', (_req: Request, res: Response) => {
+  res.sendFile(path.join(projectRoot, 'index.html'));
+});
+
+app.get('/index.html', (_req: Request, res: Response) => {
+  res.sendFile(path.join(projectRoot, 'index.html'));
+});
+
 app.post('/api/auth/validar-contexto', async (req: Request, res: Response) => {
   try {
     const chaveContexto = typeof req.body?.chave_contexto === 'string' ? req.body.chave_contexto.trim() : '';
