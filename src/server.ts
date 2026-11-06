@@ -1114,7 +1114,7 @@ app.use((error: Error & { status?: number; type?: string }, _req: Request, res: 
 });
 
 export function startServer(): void {
-  const shouldListen = process.env.VERCEL !== '1' && process.env.NODE_ENV !== 'production';
+  const shouldListen = process.env.NODE_ENV !== 'production';
 
   if (!shouldListen) {
     initializeDatabase().catch((error) => {
